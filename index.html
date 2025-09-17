@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Surpresa 💌</title>
+  <style>
+    :root{
+      --bg1: #fff4f8;
+      --bg2: #fff0f3;
+      --accent: #ff5b6e; /* botão vermelho-rosado */
+      --text: #3b2b2b;
+      --muted: #8b6f77;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: radial-gradient(circle at 10% 10%, #fff7fb 0%, var(--bg1) 35%, var(--bg2) 100%);
+      color:var(--text);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+    }
+
+    .card{
+      width:100%;
+      max-width:780px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,250,250,0.95));
+      border-radius:20px;
+      padding:40px;
+      box-shadow: 0 10px 30px rgba(123,76,92,0.12);
+      text-align:center;
+      position:relative;
+      overflow:hidden;
+    }
+
+    /* corações no fundo */
+    .card::before, .card::after{
+      content:"";
+      position:absolute;
+      width:260px;height:260px;
+      background: radial-gradient(circle at 30% 30%, rgba(255,91,110,0.15), rgba(255,91,110,0.05));
+      transform: rotate(15deg);
+      border-radius:50%;
+      pointer-events:none;
+    }
+    .card::before{left:-80px; top:-90px}
+    .card::after{right:-70px; bottom:-90px}
+
+    h1{
+      margin:0 0 6px 0;
+      font-size:28px;
+      letter-spacing:0.2px;
+    }
+
+    p.lead{
+      margin:0 0 26px 0;
+      color:var(--muted);
+    }
+
+    .heart{
+      display:inline-block;
+      transform: translateY(2px);
+      margin-bottom:18px;
+    }
+
+    /* botão central */
+    .center{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:20px;
+      flex-direction:column;
+    }
+
+    button#surpriseBtn{
+      -webkit-tap-highlight-color: transparent;
+      background:var(--accent);
+      border:0;
+      color:#fff;
+      font-weight:700;
+      font-size:18px;
+      padding:18px 34px;
+      border-radius:14px;
+      box-shadow: 0 8px 18px rgba(255,91,110,0.28);
+      cursor:pointer;
+      transition: transform .12s ease, box-shadow .12s ease, opacity .12s ease;
+    }
+    button#surpriseBtn:active{ transform: translateY(2px) scale(.995) }
+    button[disabled]{
+      opacity:.7;
+      cursor:default;
+      box-shadow: none;
+    }
+
+    .timer {
+      font-size:20px;
+      background: rgba(255,255,255,0.7);
+      padding:8px 14px;
+      border-radius:999px;
+      border: 1px solid rgba(59,43,43,0.06);
+      min-width:86px;
+      display:inline-block;
+    }
+
+    .message{
+      margin-top:22px;
+      font-size:20px;
+      padding:18px;
+      border-radius:12px;
+      display:none;
+      background: linear-gradient(90deg, rgba(255,243,246,0.9), rgba(255,250,250,0.9));
+      color: var(--text);
+      box-shadow: 0 6px 20px rgba(123,76,92,0.06);
+      animation: fadeIn .8s ease forwards;
+    }
+
+    @keyframes fadeIn{
+      from{opacity:0; transform: translateY(8px)}
+      to{opacity:1; transform: translateY(0)}
+    }
+
+    footer.note{
+      margin-top:26px;
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    /* responsivo */
+    @media (max-width:460px){
+      .card{padding:24px}
+      button#surpriseBtn{font-size:16px;padding:14px 20px}
+      .timer{font-size:18px}
+    }
+  </style>
+</head>
+<body>
+  <div class="card" role="main" aria-labelledby="titulo">
+    <div class="center">
+      <!-- ícone coração -->
+      <svg class="heart" width="60" height="60" viewBox="0 0 24 24" aria-hidden="true">
+        <path fill="#ff5b6e" d="M12 21s-7.5-4.861-10-8.073C-0.4 7.78 4.5 3.5 7.5 5.3 9.3 6.4 10 8.5 12 10c2-1.5 2.7-3.6 4.5-4.7 3-1.8 7.9 2.48 5.5 7.63C19.5 16.139 12 21 12 21z"/>
+      </svg>
+
+      <h1 id="titulo">Uma surpresa só pra você</h1>
+      <p class="lead">Aperte o botão abaixo e espere 10 segundos... promete que é especial 💖</p>
+
+      <div>
+        <button id="surpriseBtn" aria-controls="status" aria-live="polite">Aperte para desbloquear a surpresa</button>
+      </div>
+
+      <div style="height:14px"></div>
+
+      <div id="status" aria-hidden="true">
+        <div class="timer" id="timer" style="display:none">10s</div>
+        <div class="message" id="message" role="status" aria-live="polite"></div>
+      </div>
+
+      <footer class="note">Dica: Você vai amar 😉</footer>
+    </div>
+  </div>
+
+  <script>
+    // Seletores
+    const btn = document.getElementById('surpriseBtn');
+    const timerEl = document.getElementById('timer');
+    const msgEl = document.getElementById('message');
+
+    // Texto final corrigido (com acento e pontuação)
+    const finalMessage = "Vá até o seu portão — tem uma surpresa te esperando.";
+
+    // Função do som simples (beep) — opcional e discreto
+    function playBeep() {
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const o = ctx.createOscillator();
+        const g = ctx.createGain();
+        o.type = 'sine';
+        o.frequency.value = 720;
+        g.gain.value = 0.02;
+        o.connect(g);
+        g.connect(ctx.destination);
+        o.start();
+        setTimeout(()=>{ o.stop(); ctx.close().catch(()=>{}); }, 120);
+      } catch(e){
+        // audio pode falhar em navegadores que bloqueiam autoplay
+      }
+    }
+
+    // Contador de 10 segundos (inteiro)
+    function startCountdown(seconds = 10) {
+      let remaining = seconds;
+      timerEl.textContent = remaining + 's';
+      timerEl.style.display = 'inline-block';
+      msgEl.style.display = 'none';
+      btn.disabled = true;
+      btn.setAttribute('aria-disabled','true');
+
+      playBeep(); // som no início
+
+      const interval = setInterval(() => {
+        remaining--;
+        if (remaining >= 0) {
+          timerEl.textContent = remaining + 's';
+          // um beep discreto nos últimos 3 segundos
+          if (remaining <= 3 && remaining > 0) playBeep();
+        }
+        if (remaining <= 0) {
+          clearInterval(interval);
+          timerEl.style.display = 'none';
+          showFinalMessage();
+        }
+      }, 1000);
+    }
+
+    function showFinalMessage() {
+      msgEl.textContent = finalMessage;
+      msgEl.style.display = 'block';
+      msgEl.setAttribute('aria-hidden','false');
+      // efeito visual curto no botão
+      btn.style.transform = 'scale(1.03)';
+      setTimeout(()=> btn.style.transform = '', 300);
+      // liberar o botão caso a pessoa queira reiniciar
+      setTimeout(()=>{
+        btn.disabled = false;
+        btn.setAttribute('aria-disabled','false');
+      }, 1200);
+    }
+
+    // Ação do botão
+    btn.addEventListener('click', () => {
+      // Se o usuário clicar múltiplas vezes, não reinicia o contador no meio
+      if (btn.disabled) return;
+      startCountdown(10);
+    });
+
+    // Acessibilidade: tecla Enter ou Espaço
+    btn.addEventListener('keydown', (e) => {
+      if ((e.key === ' ' || e.key === 'Enter') && !btn.disabled) {
+        e.preventDefault();
+        btn.click();
+      }
+    });
+  </script>
+</body>
+</html>

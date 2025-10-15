@@ -1,4 +1,4 @@
-<!doctype html>
+<!--<!doctype html>
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8" />
@@ -142,7 +142,7 @@
   <div class="card" role="main" aria-labelledby="titulo">
     <div class="center">
       <!-- ícone coração -->
-      <svg class="heart" width="60" height="60" viewBox="0 0 24 24" aria-hidden="true">
+    <!--  <svg class="heart" width="60" height="60" viewBox="0 0 24 24" aria-hidden="true">
         <path fill="#ff5b6e" d="M12 21s-7.5-4.861-10-8.073C-0.4 7.78 4.5 3.5 7.5 5.3 9.3 6.4 10 8.5 12 10c2-1.5 2.7-3.6 4.5-4.7 3-1.8 7.9 2.48 5.5 7.63C19.5 16.139 12 21 12 21z"/>
       </svg>
 
@@ -245,6 +245,129 @@
         btn.click();
       }
     });
+  </script>
+</body>
+</html>-->
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Feliz Aniversário, Amor — Viagem Galáctica</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#06060b;
+      --card:#0f1724;
+      --accent:#00e5ff;
+      --accent2:#ffcc00;
+      --glass: rgba(255,255,255,0.06);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:Roboto,system-ui,-apple-system,Segoe UI,Helvetica,Arial}
+    body{background:radial-gradient(ellipse at center, #0b1220 0%, #030309 60%), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600"><g fill="white" opacity="0.9"><circle cx="50" cy="30" r="1"/><circle cx="120" cy="90" r="1"/><circle cx="340" cy="40" r="1"/><circle cx="540" cy="200" r="1"/><circle cx="700" cy="50" r="1"/><circle cx="200" cy="300" r="1"/><circle cx="600" cy="420" r="1"/><circle cx="400" cy="500" r="1"/></g></svg>') repeat; color:#e6eef6}
+    header{padding:28px 24px;display:flex;align-items:center;gap:16px}
+    .logo{font-family:Orbitron, sans-serif;color:var(--accent);font-size:20px;letter-spacing:2px}
+    .subtitle{color:#9fbfd0;font-size:14px}
+
+    main{max-width:980px;margin:18px auto;padding:24px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:14px;padding:20px;box-shadow:0 8px 30px rgba(0,0,0,0.6);backdrop-filter: blur(6px)}
+
+    .hero{display:flex;gap:20px;align-items:center}
+    .panel{flex:1}
+    h1{font-family:Orbitron, sans-serif;margin:0;font-size:34px;color:var(--accent)}
+    p.lead{color:#bcd4df}
+
+    .timer{margin-top:18px;background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:14px;border-radius:10px;display:flex;gap:12px;flex-wrap:wrap}
+    .time-seg{min-width:110px}
+    .num{font-size:20px;font-weight:700;color:var(--accent2)}
+    .lbl{font-size:12px;color:#9fbfd0}
+
+    .right{width:360px}
+    .controls{display:flex;gap:8px;margin-top:12px}
+    .btn{background:var(--glass);border:1px solid rgba(255,255,255,0.04);padding:10px 12px;border-radius:8px;cursor:pointer;color:#e6eef6}
+    .btn.primary{background:linear-gradient(90deg,var(--accent),#7effff);color:#03121a;font-weight:700}
+
+    .saber{display:inline-block;padding:6px 10px;border-radius:999px;background:linear-gradient(90deg,#ff5f6d,#ffc371);box-shadow:0 6px 20px rgba(255,95,109,0.18);font-weight:700}
+
+    footer{margin-top:16px;color:#90b3c4;font-size:13px;text-align:center}
+
+    /* popup */
+    .modal-back{position:fixed;inset:0;background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;visibility:hidden;opacity:0;transition:opacity .18s}
+    .modal{width:92%;max-width:520px;background:linear-gradient(180deg,rgba(10,14,20,0.98),rgba(6,9,14,0.98));border-radius:12px;padding:18px;border:1px solid rgba(255,255,255,0.04);box-shadow:0 16px 60px rgba(2,6,12,0.7)}
+    .modal h2{margin:0;color:var(--accent)}
+    .modal p{color:#cfe7f2}
+    .modal.show{transform:translateY(0)}
+    .modal-back.show{visibility:visible;opacity:1}
+
+    @media (max-width:880px){.hero{flex-direction:column}.right{width:100%}.panel{width:100%}}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">GALACTIC GIFT</div>
+    <div class="subtitle">Uma missão especial para o amor da minha vida — 16/11</div>
+  </header>
+
+  <main>
+    <div class="card hero">
+      <div class="panel">
+        <h1>Feliz Aniversário, meu amor ✨</h1>
+        <p class="lead">Se beijos fossem estrelas, eu te daria uma galáxia.</p>
+
+        <div class="timer" aria-live="polite">
+          <div class="time-seg"><div class="num" id="years">0</div><div class="lbl">Anos</div></div>
+          <div class="time-seg"><div class="num" id="months">0</div><div class="lbl">Meses</div></div>
+          <div class="time-seg"><div class="num" id="days">0</div><div class="lbl">Dias</div></div>
+          <div class="time-seg"><div class="num" id="hours">00</div><div class="lbl">Horas</div></div>
+          <div class="time-seg"><div class="num" id="minutes">00</div><div class="lbl">Minutos</div></div>
+          <div class="time-seg"><div class="num" id="seconds">00</div><div class="lbl">Segundos</div></div>
+        </div>
+
+        <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn primary" id="open-msg">Abrir mensagem especial</button>
+          <!--<button class="btn" id="download-html">Baixar página (.html)</button>-->
+        </div>
+
+        <p style="margin-top:12px;color:#9fbfd0">Te amarei até na galáxia mais distante!</p>
+      </div>
+
+      <aside class="right">
+        <div class="card">
+          <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/track/53iuhJlwXhSER5J2IYYv1W?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        </div>
+        <div class="controls"><span class="saber">Que a Força nos una</span></div>
+      </aside>
+    </div>
+
+    <footer class="card" style="margin-top:18px">
+      <small>Feito para o amor da minha vida.</small>
+    </footer>
+  </main>
+
+  <div class="modal-back" id="modal-back" role="dialog" aria-hidden="true">
+    <div class="modal" role="document">
+      <h2>Feliz Aniversário, meu amor 💫</h2>
+      <p id="modal-text"></p>
+      <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:12px"><button class="btn" id="close-modal">Fechar</button></div>
+    </div>
+  </div>
+
+  <script>
+    const startDate = new Date('2025-07-19T00:00:00-03:00');
+    const yearsEl=document.getElementById('years'),monthsEl=document.getElementById('months'),daysEl=document.getElementById('days'),hoursEl=document.getElementById('hours'),minutesEl=document.getElementById('minutes'),secondsEl=document.getElementById('seconds');
+    function pad(n){return String(n).padStart(2,'0')}
+    function updateTimer(){const now=new Date();let y1=startDate.getFullYear(),m1=startDate.getMonth(),d1=startDate.getDate();let y2=now.getFullYear(),m2=now.getMonth(),d2=now.getDate();let years=y2-y1;let months=m2-m1;let days=d2-d1;if(days<0){months-=1;const prevMonth=new Date(y2,m2,0).getDate();days+=prevMonth;}if(months<0){years-=1;months+=12;}const startOfToday=new Date(now.getFullYear(),now.getMonth(),now.getDate());const elapsedTodayMs=now-startOfToday;const hours=Math.floor(elapsedTodayMs/(1000*60*60));const minutes=Math.floor((elapsedTodayMs%(1000*60*60))/(1000*60));const seconds=Math.floor((elapsedTodayMs%(1000*60))/1000);yearsEl.textContent=years;monthsEl.textContent=months;daysEl.textContent=days;hoursEl.textContent=pad(hours);minutesEl.textContent=pad(minutes);secondsEl.textContent=pad(seconds);}updateTimer();setInterval(updateTimer,1000);
+
+    const modalBack=document.getElementById('modal-back'),modalText=document.getElementById('modal-text'),openBtn=document.getElementById('open-msg'),closeBtn=document.getElementById('close-modal');
+    const mensagem=`Feliz aniversário, meu amor!\n\nHoje celebro você — sua luz, seu riso e todo o universo que você constrói ao meu redor. Te amo de aqui até outras galáxias; meu amor por você é infinito, sem limites e sem fim. Obrigado por existir e por ser meu lar. Para sempre seu.`;
+    openBtn.addEventListener('click',()=>{modalText.textContent=mensagem;modalBack.classList.add('show');modalBack.setAttribute('aria-hidden','false');});
+    closeBtn.addEventListener('click',()=>{modalBack.classList.remove('show');modalBack.setAttribute('aria-hidden','true');});
+    modalBack.addEventListener('click',e=>{if(e.target===modalBack){modalBack.classList.remove('show');modalBack.setAttribute('aria-hidden','true');}});
+
+    document.getElementById('download-html').addEventListener('click',()=>{const html='<!doctype html>\n'+document.documentElement.outerHTML;const blob=new Blob([html],{type:'text/html'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='presente_aniversario.html';document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);});
+
+    document.addEventListener('keydown',e=>{if(e.key==='Escape'){modalBack.classList.remove('show');modalBack.setAttribute('aria-hidden','true');}});
   </script>
 </body>
 </html>
